@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<div class="topbar">
+    Admin Dashboard
+    <a href="/logout" class="logout-btn">Logout</a>
+</div>
+
+<div class="container">
+    <h2>Welcome, Admin</h2>
+    <div class="card-grid">
+        <div class="card">Manage Users (Doctor/Nurse)</div>
+        <div class="card">Add Patient Record</div>
+        <div class="card">Update Patient Record</div>
+        <div class="card">View/Search Patient Records</div>
+        <div class="card">Delete Patient Record</div>
+        <div class="card">System Settings / Database Maintenance</div>
+    </div>
+</div>
+
+</body>
+</html>

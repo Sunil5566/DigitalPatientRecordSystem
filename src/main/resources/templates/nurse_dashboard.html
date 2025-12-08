@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/nurse.css}">
+</head>
+<body>
+
+<div class="topbar">
+    Nurse Dashboard
+    <a href="/logout" class="logout-btn">Logout</a>
+</div>
+
+<div class="container">
+    <h2>Welcome, Nurse</h2>
+    <div class="card-grid">
+        <div class="card">Add Basic Patient Information</div>
+        <div class="card">Update Vitals / Symptoms</div>
+        <div class="card">View/Search Patient Records</div>
+    </div>
+</div>
+
+</body>
+</html>

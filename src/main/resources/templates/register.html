@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Register</title>
+	<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+	<h2>Registration Form</h2>
+
+	<p th:if="${error.hasError}" th:text="${error.msg}" style="color: red;"></p>
+
+	<form action="/register" method="post" th:object="${registerForm}">
+
+		<div>
+			<label for="userType">Register as:</label>
+			<select th:field="*{userType}">
+				<option th:each="utype: ${userTypes}" th:text="${utype}" 
+				th:value="${utype}"></option>
+				
+			</select>
+		</div>
+
+		<div>
+			<label for="firstName">First Name:</label>
+			<input type="text" th:field="*{firstName}">
+		</div>
+
+		<div>
+			<label for="lastName">Last Name:</label>
+			<input type="text" th:field="*{lastName}">
+		</div>
+
+		<div>
+			<label for="email">Email:</label>
+			<input type="email" th:field="*{email}">
+		</div>
+
+		<div>
+			<label for="password">Password:</label>
+			<input type="password" th:field="*{password}">
+		</div>
+
+		<div>
+			<label for="confirmPassword">Confirm Password:</label>
+			<input type="password" th:field="*{confirmPassword}">
+		</div>
+
+		<div>
+			Gender:
+			<input type="radio" th:field="*{gender}" id="gender-male" value="MALE">
+			<label for="gender-male">Male</label>
+
+			<input type="radio" th:field="*{gender}" id="gender-female" value="FEMALE">
+			<label for="gender-female">Female</label>
+		</div>
+
+		<div>
+			<input type="submit" value="Register">
+		</div>
+	</form>
+	Already have an account? <a href="/login">Login here!</a>
+</body>
+
+</html>
