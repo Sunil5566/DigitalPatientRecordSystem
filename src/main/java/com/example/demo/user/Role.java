@@ -1,5 +1,6 @@
 package com.example.demo.user;
 
-public enum UserType {
+public enum Role {
 	ADMIN, DOCTOR, NURSE;
 }
+

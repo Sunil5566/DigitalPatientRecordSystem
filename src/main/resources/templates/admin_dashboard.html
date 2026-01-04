@@ -10,20 +10,36 @@
 
 <div class="topbar">
     Admin Dashboard
-    <a href="/logout" class="logout-btn">Logout</a>
+    <div>
+        <span th:text="${'Welcome, ' + user.firstName}"></span>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
 </div>
 
 <div class="container">
-    <h2>Welcome, Admin</h2>
+    <h2>Admin Control Panel</h2>
     <div class="card-grid">
-        <div class="card">Manage Users (Doctor/Nurse)</div>
-        <div class="card">Add Patient Record</div>
-        <div class="card">Update Patient Record</div>
-        <div class="card">View/Search Patient Records</div>
-        <div class="card">Delete Patient Record</div>
-        <div class="card">System Settings / Database Maintenance</div>
+        <a href="/admin/users" class="card-link">
+            <div class="card">Manage Users (Doctor/Nurse)</div>
+        </a>
+        <a href="/admin/patients" class="card-link">
+            <div class="card">View All Patients</div>
+        </a>
+        <a href="/admin/records" class="card-link">
+            <div class="card">View All Medical Records</div>
+        </a>
+        <a href="/admin/appointments" class="card-link">
+            <div class="card">View All Appointments</div>
+        </a>
     </div>
 </div>
+
+<style>
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+</style>
 
 </body>
 </html>

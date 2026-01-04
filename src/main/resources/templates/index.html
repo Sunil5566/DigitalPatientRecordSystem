@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Patient Record System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 40px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 50px;
+            font-size: 1.1em;
+        }
+
+        .role-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .role-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .role-card.admin {
+            background: linear-gradient(135deg, #d93025 0%, #c5221f 100%);
+        }
+
+        .role-card.doctor {
+            background: linear-gradient(135deg, #0b8043 0%, #0a6e38 100%);
+        }
+
+        .role-card.nurse {
+            background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+        }
+
+        .role-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .role-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .role-description {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: #999;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Digital Patient Record System</h1>
+        <p class="subtitle">Secure Hospital Management Platform</p>
+
+        <div class="role-selection">
+            <a href="/admin/login" class="role-card admin">
+                <div class="role-icon">👨‍💼</div>
+                <div class="role-title">Admin</div>
+                <div class="role-description">System Administration & User Management</div>
+            </a>
+
+            <a href="/doctor/login" class="role-card doctor">
+                <div class="role-icon">👨‍⚕️</div>
+                <div class="role-title">Doctor</div>
+                <div class="role-description">Medical Records & Patient Care</div>
+            </a>
+
+            <a href="/nurse/login" class="role-card nurse">
+                <div class="role-icon">👩‍⚕️</div>
+                <div class="role-title">Nurse</div>
+                <div class="role-description">Patient Vitals & Care Management</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>Select your role to continue</p>
+        </div>
+    </div>
+</body>
+</html>
+

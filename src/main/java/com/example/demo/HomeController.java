@@ -1,14 +1,2 @@
-package com.example.demo;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-
-@Controller
-public class HomeController {
-
-	@GetMapping("/")
-	public String getHomePage() {
-		return "home";
-	}
-	
-}
+// This controller is no longer needed - landing page is handled by AuthController
+// Keeping file for backward compatibility but removing duplicate mapping

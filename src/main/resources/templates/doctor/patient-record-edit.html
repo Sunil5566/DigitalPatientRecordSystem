@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Patient Record - Doctor</title>
+    <link rel="stylesheet" th:href="@{/css/doctor.css}">
+</head>
+<body>
+
+<div class="topbar">
+    Doctor Dashboard >> Edit Patient Record
+    <div>
+        <a th:href="@{/doctor/patient/{id}(id=${record.patient.id})}" style="color: white; margin-right: 10px;">Back to Patient</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Edit Medical Record</h2>
+    
+    <form th:action="@{/doctor/patient-record/{id}/edit(id=${record.id})}" method="post" style="background: white; padding: 30px; border-radius: 10px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Patient:</label>
+            <input type="text" th:value="${record.patient.firstName + ' ' + record.patient.lastName}" disabled style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #f5f5f5;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="visitType" style="display: block; margin-bottom: 5px; font-weight: bold;">Visit Type:</label>
+            <select name="visitType" id="visitType" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <option value="INITIAL" th:selected="${record.visitType == 'INITIAL'}">Initial Visit</option>
+                <option value="FOLLOWUP" th:selected="${record.visitType == 'FOLLOWUP'}">Follow-up</option>
+                <option value="EMERGENCY" th:selected="${record.visitType == 'EMERGENCY'}">Emergency</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="diagnosis" style="display: block; margin-bottom: 5px; font-weight: bold;">Diagnosis:</label>
+            <textarea name="diagnosis" id="diagnosis" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" th:text="${record.diagnosis}"></textarea>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="prescriptions" style="display: block; margin-bottom: 5px; font-weight: bold;">Prescriptions:</label>
+            <textarea name="prescriptions" id="prescriptions" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" th:text="${record.prescriptions}"></textarea>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="labResults" style="display: block; margin-bottom: 5px; font-weight: bold;">Lab Results:</label>
+            <textarea name="labResults" id="labResults" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" th:text="${record.labResults}"></textarea>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="visitNotes" style="display: block; margin-bottom: 5px; font-weight: bold;">Visit Notes:</label>
+            <textarea name="visitNotes" id="visitNotes" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" th:text="${record.visitNotes}"></textarea>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="remarks" style="display: block; margin-bottom: 5px; font-weight: bold;">Remarks:</label>
+            <textarea name="remarks" id="remarks" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" th:text="${record.remarks}"></textarea>
+        </div>
+
+        <button type="submit" style="background: #0b8043; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Update Record</button>
+    </form>
+</div>
+
+</body>
+</html>
+

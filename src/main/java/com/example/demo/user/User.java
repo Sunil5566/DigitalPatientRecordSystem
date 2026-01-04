@@ -3,7 +3,6 @@ package com.example.demo.user;
 import java.time.Instant;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,56 +14,47 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "_user")
+@Table(name = "users")
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
-	@Column(nullable = false)
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	
+	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column(nullable = false, unique = true)
-	private String username;
-	
-	@Column(nullable = false, unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
-	@Column(nullable = false)
+	@Column(name = "username", nullable = false, unique = true)
+	private String username;
+	
+	@Column(name = "password", nullable = false)
 	private String password;
 	
-	private String address;
-	
-	private String profilePicture;
-	
-	@Column(nullable = false)
+	@Column(name = "role", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private Gender gender;
+	private Role role;
 	
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private UserType type;
-	
-	@Column(unique = true)
-	private String session;
+	@Column(name = "active", nullable = false)
+	private Boolean active = true;
 	
 	@CreationTimestamp
+	@Column(name = "created_at", nullable = false, updatable = false)
 	private Instant createdAt;
-	
-	@UpdateTimestamp
-	private Instant updatedAt;
 	
 	public User() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -84,20 +74,20 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -108,28 +98,20 @@ public class User {
 		this.password = password;
 	}
 
-	public String getAddress() {
-		return address;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
-	public String getProfilePicture() {
-		return profilePicture;
+	public Boolean getActive() {
+		return active;
 	}
 
-	public void setProfilePicture(String profilePicture) {
-		this.profilePicture = profilePicture;
-	}
-
-	public String getSession() {
-		return session;
-	}
-
-	public void setSession(String session) {
-		this.session = session;
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public Instant getCreatedAt() {
@@ -138,30 +120,6 @@ public class User {
 
 	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
-	}
-
-	public Instant getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Instant updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public Gender getGender() {
-		return gender;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	public UserType getType() {
-		return type;
-	}
-
-	public void setType(UserType type) {
-		this.type = type;
 	}
 	
 }

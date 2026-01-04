@@ -1,26 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/doctor.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Doctor Dashboard</title>
+	<link rel="stylesheet" th:href="@{/css/doctor.css}">
 </head>
+
 <body>
 
-<div class="topbar">
-    Doctor Dashboard
-    <a href="/logout" class="logout-btn">Logout</a>
-</div>
+	<div class="topbar">
+		Doctor Dashboard
+		<div>
+			<span th:text="${'Welcome, Dr. ' + user.firstName}"></span>
+			<a href="/logout" class="logout-btn">Logout</a>
+		</div>
+	</div>
 
-<div class="container">
-    <h2>Welcome, Doctor</h2>
-    <div class="card-grid">
-        <div class="card">Add Patient Record</div>
-        <div class="card">Update Patient Medical History</div>
-        <div class="card">View/Search Patient Records</div>
-    </div>
-</div>
+	<div class="container">
+		<h2>Doctor Control Panel</h2>
+		<div class="card-grid">
+			<a href="/doctor/patients" class="card-link">
+				<div class="card">View/Search Patients</div>
+			</a>
+			<a href="/doctor/patient-record/add" class="card-link">
+				<div class="card">Add Patient Medical Record</div>
+			</a>
+			<a href="/doctor/appointments" class="card-link">
+				<div class="card">View Appointments</div>
+			</a>
+		</div>
+	</div>
+
+<style>
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+</style>
 
 </body>
+
 </html>

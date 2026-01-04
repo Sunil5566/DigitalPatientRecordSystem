@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<div class="topbar">
+    Admin Dashboard >> Manage Users
+    <div>
+        <a href="/dashboard" style="color: white; margin-right: 10px;">Dashboard</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>User Management</h2>
+    
+    <div style="margin-bottom: 20px;">
+        <a href="/admin/register" style="background: #d93025; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Create New User</a>
+    </div>
+
+    <h3>Doctors</h3>
+    <table style="width: 100%; border-collapse: collapse; background: white; margin-bottom: 30px;">
+        <thead>
+            <tr style="background: #f0f0f0;">
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Name</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Email</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Status</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="doctor : ${doctors}">
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${doctor.firstName + ' ' + doctor.lastName}"></td>
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${doctor.email}"></td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <span th:if="${doctor.active}" style="color: green; font-weight: bold;">ACTIVE</span>
+                    <span th:if="${!doctor.active}" style="color: red; font-weight: bold;">INACTIVE</span>
+                </td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <form th:if="${!doctor.active}" th:action="@{/admin/users/{id}/approve(id=${doctor.id})}" method="post" style="display: inline;">
+                        <button type="submit" style="background: green; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Activate</button>
+                    </form>
+                    <form th:if="${doctor.active}" th:action="@{/admin/users/{id}/block(id=${doctor.id})}" method="post" style="display: inline;">
+                        <button type="submit" style="background: red; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; margin-left: 5px;">Deactivate</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Nurses</h3>
+    <table style="width: 100%; border-collapse: collapse; background: white;">
+        <thead>
+            <tr style="background: #f0f0f0;">
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Name</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Email</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Status</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="nurse : ${nurses}">
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${nurse.firstName + ' ' + nurse.lastName}"></td>
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${nurse.email}"></td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <span th:if="${nurse.status == 'APPROVED'}" style="color: green; font-weight: bold;">APPROVED</span>
+                    <span th:if="${nurse.status == 'PENDING'}" style="color: orange; font-weight: bold;">PENDING</span>
+                    <span th:if="${nurse.status == 'BLOCKED'}" style="color: red; font-weight: bold;">BLOCKED</span>
+                </td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <form th:if="${nurse.status != 'APPROVED'}" th:action="@{/admin/users/{id}/approve(id=${nurse.id})}" method="post" style="display: inline;">
+                        <button type="submit" style="background: green; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Approve</button>
+                    </form>
+                    <form th:if="${nurse.status != 'BLOCKED'}" th:action="@{/admin/users/{id}/block(id=${nurse.id})}" method="post" style="display: inline;">
+                        <button type="submit" style="background: red; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; margin-left: 5px;">Block</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+

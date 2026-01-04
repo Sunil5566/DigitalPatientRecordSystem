@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Login - Digital Patient Record System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0b8043 0%, #0a6e38 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-container h2 {
+            color: #0b8043;
+            margin-bottom: 10px;
+        }
+
+        .login-container .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: #d93025;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0b8043;
+            box-shadow: 0 0 5px rgba(11, 128, 67, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #0b8043;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #0a6e38;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .back-link:hover {
+            color: #0b8043;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>👨‍⚕️ Doctor Login</h2>
+        <p class="subtitle">Medical Records & Patient Care Portal</p>
+        
+        <p th:if="${error != null && error.hasError}" th:text="${error.msg}" class="error-message"></p>
+        
+        <form action="/doctor/login" method="post" th:object="${form}">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" th:field="*{email}" id="email" placeholder="doctor@hospital.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" th:field="*{password}" id="password" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Login as Doctor</button>
+        </form>
+
+        <a href="/" class="back-link">← Back to Role Selection</a>
+    </div>
+</body>
+</html>
+

@@ -19,14 +19,15 @@
 <div class="container">
 	<h2>Create New User (Doctor/Nurse)</h2>
 
-	<p th:if="${error.hasError}" th:text="${error.msg}" style="color: red; background: #ffe6e6; padding: 10px; border-radius: 5px; margin-bottom: 20px;"></p>
+	<p th:if="${error != null && error.hasError}" th:text="${error.msg}" style="color: red; background: #ffe6e6; padding: 10px; border-radius: 5px; margin-bottom: 20px;"></p>
 
-	<form action="/register" method="post" th:object="${registerForm}" style="background: white; padding: 30px; border-radius: 10px; max-width: 600px;">
+	<form action="/admin/register" method="post" th:object="${registerForm}" style="background: white; padding: 30px; border-radius: 10px; max-width: 600px;">
 		<div style="margin-bottom: 15px;">
 			<label for="userType" style="display: block; margin-bottom: 5px; font-weight: bold;">User Type: *</label>
 			<select th:field="*{userType}" id="userType" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
 				<option value="">Select User Type</option>
-				<option th:each="utype: ${userTypes}" th:text="${utype}" th:value="${utype}"></option>
+				<option value="DOCTOR">Doctor</option>
+				<option value="NURSE">Nurse</option>
 			</select>
 		</div>
 
@@ -56,23 +57,10 @@
 			<input type="password" th:field="*{confirmPassword}" id="confirmPassword" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
 		</div>
 
-		<div style="margin-bottom: 15px;">
-			<label style="display: block; margin-bottom: 5px; font-weight: bold;">Gender: *</label>
-			<div style="display: flex; gap: 20px;">
-				<label style="display: flex; align-items: center;">
-					<input type="radio" th:field="*{gender}" id="gender-male" value="MALE" required style="margin-right: 5px;">
-					Male
-				</label>
-				<label style="display: flex; align-items: center;">
-					<input type="radio" th:field="*{gender}" id="gender-female" value="FEMALE" required style="margin-right: 5px;">
-					Female
-				</label>
-			</div>
-		</div>
-
 		<button type="submit" style="background: #d93025; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Create User</button>
 	</form>
 </div>
 
 </body>
 </html>
+

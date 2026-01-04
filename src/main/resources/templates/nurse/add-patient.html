@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Patient - Nurse</title>
+    <link rel="stylesheet" th:href="@{/css/nurse.css}">
+</head>
+<body>
+
+<div class="topbar">
+    Nurse Dashboard >> Add Patient
+    <div>
+        <a href="/nurse/patients" style="color: white; margin-right: 10px;">Back to Patients</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Add New Patient</h2>
+    
+    <form th:action="@{/nurse/patient/add}" method="post" style="background: white; padding: 30px; border-radius: 10px;">
+        <div style="margin-bottom: 15px;">
+            <label for="firstName" style="display: block; margin-bottom: 5px; font-weight: bold;">First Name: *</label>
+            <input type="text" name="firstName" id="firstName" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="lastName" style="display: block; margin-bottom: 5px; font-weight: bold;">Last Name:</label>
+            <input type="text" name="lastName" id="lastName" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="gender" style="display: block; margin-bottom: 5px; font-weight: bold;">Gender: *</label>
+            <select name="gender" id="gender" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <option value="">Select Gender</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="age" style="display: block; margin-bottom: 5px; font-weight: bold;">Age: *</label>
+            <input type="number" name="age" id="age" required min="0" max="150" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="contact" style="display: block; margin-bottom: 5px; font-weight: bold;">Contact:</label>
+            <input type="text" name="contact" id="contact" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="address" style="display: block; margin-bottom: 5px; font-weight: bold;">Address:</label>
+            <textarea name="address" id="address" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+        </div>
+
+        <button type="submit" style="background: #1a73e8; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Add Patient</button>
+    </form>
+</div>
+
+</body>
+</html>
+

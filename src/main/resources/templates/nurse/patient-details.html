@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details - Nurse</title>
+    <link rel="stylesheet" th:href="@{/css/nurse.css}">
+</head>
+<body>
+
+<div class="topbar">
+    Nurse Dashboard >> Patient Details
+    <div>
+        <a href="/nurse/patients" style="color: white; margin-right: 10px;">Back to Patients</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Patient Information</h2>
+    <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+        <p><strong>Name:</strong> <span th:text="${patient.firstName + ' ' + patient.lastName}"></span></p>
+        <p><strong>Gender:</strong> <span th:text="${patient.gender}"></span></p>
+        <p><strong>Age:</strong> <span th:text="${patient.age}"></span></p>
+        <p><strong>Contact:</strong> <span th:text="${patient.contact}"></span></p>
+        <p><strong>Address:</strong> <span th:text="${patient.address}"></span></p>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <h3>Vitals History</h3>
+        <a th:href="@{/nurse/patient/{id}/vitals/add(id=${patient.id})}" style="background: #1a73e8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Add New Vitals</a>
+    </div>
+
+    <div th:each="vitals : ${vitalsHistory}" style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <h4 th:text="${'Vitals Record - ' + (#temporals.format(vitals.createdAt, 'yyyy-MM-dd HH:mm') ?: vitals.createdAt)}"></h4>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <p th:if="${vitals.bloodPressureSystolic != null}"><strong>BP:</strong> <span th:text="${vitals.bloodPressureSystolic + '/' + vitals.bloodPressureDiastolic}"></span> mmHg</p>
+            <p th:if="${vitals.temperature != null}"><strong>Temperature:</strong> <span th:text="${vitals.temperature + ' °C'}"></span></p>
+            <p th:if="${vitals.weight != null}"><strong>Weight:</strong> <span th:text="${vitals.weight + ' kg'}"></span></p>
+            <p th:if="${vitals.height != null}"><strong>Height:</strong> <span th:text="${vitals.height + ' cm'}"></span></p>
+            <p th:if="${vitals.bloodSugar != null}"><strong>Blood Sugar:</strong> <span th:text="${vitals.bloodSugar + ' mg/dL'}"></span></p>
+            <p th:if="${vitals.heartRate != null}"><strong>Heart Rate:</strong> <span th:text="${vitals.heartRate + ' bpm'}"></span></p>
+            <p th:if="${vitals.respiratoryRate != null}"><strong>Respiratory Rate:</strong> <span th:text="${vitals.respiratoryRate + ' /min'}"></span></p>
+        </div>
+        <p th:if="${vitals.notes}"><strong>Notes:</strong> <span th:text="${vitals.notes}"></span></p>
+    </div>
+
+    <div th:if="${#lists.isEmpty(vitalsHistory)}" style="background: white; padding: 20px; border-radius: 10px; text-align: center; color: #666;">
+        No vitals records found for this patient.
+    </div>
+</div>
+
+</body>
+</html>
+

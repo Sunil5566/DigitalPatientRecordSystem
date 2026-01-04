@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Patients - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<div class="topbar">
+    Admin Dashboard >> All Patients
+    <div>
+        <a href="/dashboard" style="color: white; margin-right: 10px;">Dashboard</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>All Patients</h2>
+    
+    <form method="get" action="/admin/patients" style="margin-bottom: 20px;">
+        <input type="text" name="search" placeholder="Search by name..." th:value="${search}" style="padding: 10px; width: 300px; border: 1px solid #ddd; border-radius: 5px;">
+        <button type="submit" style="padding: 10px 20px; background: #d93025; color: white; border: none; border-radius: 5px; cursor: pointer;">Search</button>
+        <a href="/admin/patients" style="padding: 10px 20px; background: #666; color: white; text-decoration: none; border-radius: 5px; display: inline-block; margin-left: 10px;">Clear</a>
+    </form>
+
+    <table style="width: 100%; border-collapse: collapse; background: white;">
+        <thead>
+            <tr style="background: #f0f0f0;">
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">ID</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Name</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Gender</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Age</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Contact</th>
+                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="patient : ${patients}">
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${patient.id}"></td>
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${patient.firstName + ' ' + patient.lastName}"></td>
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${patient.gender}"></td>
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${patient.age}"></td>
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${patient.contact}"></td>
+                <td style="padding: 12px; border: 1px solid #ddd;" th:text="${patient.address}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(patients)}">
+                <td colspan="6" style="padding: 20px; text-align: center; color: #666;">No patients found</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add Patient Record - Doctor</title>
+	<link rel="stylesheet" th:href="@{/css/doctor.css}">
+</head>
+
+<body>
+
+	<div class="topbar">
+		Doctor Dashboard >> Add Patient Record
+		<div>
+			<a href="/doctor/patients" style="color: white; margin-right: 10px;">Back to Patients</a>
+			<a href="/logout" class="logout-btn">Logout</a>
+		</div>
+	</div>
+
+	<div class="container">
+		<h2>Add Medical Record</h2>
+		
+		<form th:action="@{/doctor/patient-record/add}" method="post" style="background: white; padding: 30px; border-radius: 10px;">
+			<div style="margin-bottom: 15px;">
+				<label for="patientId" style="display: block; margin-bottom: 5px; font-weight: bold;">Patient:</label>
+				<select name="patientId" id="patientId" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+					<option value="">Select a patient</option>
+					<option th:each="p : ${patients}" th:value="${p.id}" th:text="${p.firstName + ' ' + p.lastName + ' (ID: ' + p.id + ')'}" th:selected="${selectedPatient != null && selectedPatient.id == p.id}"></option>
+				</select>
+			</div>
+
+			<div style="margin-bottom: 15px;">
+				<label for="visitType" style="display: block; margin-bottom: 5px; font-weight: bold;">Visit Type:</label>
+				<select name="visitType" id="visitType" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+					<option value="INITIAL">Initial Visit</option>
+					<option value="FOLLOWUP" selected>Follow-up</option>
+					<option value="EMERGENCY">Emergency</option>
+				</select>
+			</div>
+
+			<div style="margin-bottom: 15px;">
+				<label for="diagnosis" style="display: block; margin-bottom: 5px; font-weight: bold;">Diagnosis:</label>
+				<textarea name="diagnosis" id="diagnosis" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+			</div>
+
+			<div style="margin-bottom: 15px;">
+				<label for="prescriptions" style="display: block; margin-bottom: 5px; font-weight: bold;">Prescriptions:</label>
+				<textarea name="prescriptions" id="prescriptions" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+			</div>
+
+			<div style="margin-bottom: 15px;">
+				<label for="labResults" style="display: block; margin-bottom: 5px; font-weight: bold;">Lab Results:</label>
+				<textarea name="labResults" id="labResults" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+			</div>
+
+			<div style="margin-bottom: 15px;">
+				<label for="visitNotes" style="display: block; margin-bottom: 5px; font-weight: bold;">Visit Notes:</label>
+				<textarea name="visitNotes" id="visitNotes" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+			</div>
+
+			<div style="margin-bottom: 15px;">
+				<label for="remarks" style="display: block; margin-bottom: 5px; font-weight: bold;">Remarks:</label>
+				<textarea name="remarks" id="remarks" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+			</div>
+
+			<button type="submit" style="background: #0b8043; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Save Record</button>
+		</form>
+	</div>
+
+</body>
+
+</html>
