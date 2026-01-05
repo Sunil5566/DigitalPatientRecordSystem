@@ -44,7 +44,8 @@ public class DoctorController {
 	private AppointmentRepository appointmentRepository;
 
 	@GetMapping("/doctor/patients")
-	public String viewPatients(HttpServletRequest request, Model model, @RequestParam(required = false) String search) {
+	public String viewPatients(HttpServletRequest request, Model model,
+			@RequestParam(name = "search", required = false) String search) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
 		}
@@ -66,7 +67,8 @@ public class DoctorController {
 	}
 
 	@GetMapping("/doctor/patient/{patientId}")
-	public String viewPatientDetails(@PathVariable int patientId, HttpServletRequest request, Model model) {
+	public String viewPatientDetails(@PathVariable("patientId") int patientId, HttpServletRequest request,
+			Model model) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
 		}
@@ -90,7 +92,7 @@ public class DoctorController {
 
 	@GetMapping("/doctor/patient-record/add")
 	public String getAddPatientRecordPage(HttpServletRequest request, Model model,
-			@RequestParam(required = false) Integer patientId) {
+			@RequestParam(name = "patientId", required = false) Integer patientId) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
 		}
@@ -110,10 +112,13 @@ public class DoctorController {
 	}
 
 	@PostMapping("/doctor/patient-record/add")
-	public String addPatientRecord(@RequestParam int patientId, @RequestParam(required = false) String diagnosis,
-			@RequestParam(required = false) String prescriptions, @RequestParam(required = false) String labResults,
-			@RequestParam(required = false) String visitNotes, @RequestParam(required = false) String visitType,
-			@RequestParam(required = false) String remarks, HttpServletRequest request) {
+	public String addPatientRecord(@RequestParam("patientId") int patientId,
+			@RequestParam(name = "diagnosis", required = false) String diagnosis,
+			@RequestParam(name = "prescriptions", required = false) String prescriptions,
+			@RequestParam(name = "labResults", required = false) String labResults,
+			@RequestParam(name = "visitNotes", required = false) String visitNotes,
+			@RequestParam(name = "visitType", required = false) String visitType,
+			@RequestParam(name = "remarks", required = false) String remarks, HttpServletRequest request) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
 		}
@@ -140,7 +145,8 @@ public class DoctorController {
 	}
 
 	@GetMapping("/doctor/patient-record/{recordId}/edit")
-	public String getEditPatientRecordPage(@PathVariable int recordId, HttpServletRequest request, Model model) {
+	public String getEditPatientRecordPage(@PathVariable("recordId") int recordId, HttpServletRequest request,
+			Model model) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
 		}
@@ -158,10 +164,13 @@ public class DoctorController {
 	}
 
 	@PostMapping("/doctor/patient-record/{recordId}/edit")
-	public String updatePatientRecord(@PathVariable int recordId, @RequestParam(required = false) String diagnosis,
-			@RequestParam(required = false) String prescriptions, @RequestParam(required = false) String labResults,
-			@RequestParam(required = false) String visitNotes, @RequestParam(required = false) String visitType,
-			@RequestParam(required = false) String remarks, HttpServletRequest request) {
+	public String updatePatientRecord(@PathVariable("recordId") int recordId,
+			@RequestParam(name = "diagnosis", required = false) String diagnosis,
+			@RequestParam(name = "prescriptions", required = false) String prescriptions,
+			@RequestParam(name = "labResults", required = false) String labResults,
+			@RequestParam(name = "visitNotes", required = false) String visitNotes,
+			@RequestParam(name = "visitType", required = false) String visitType,
+			@RequestParam(name = "remarks", required = false) String remarks, HttpServletRequest request) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
 		}
@@ -187,7 +196,7 @@ public class DoctorController {
 	}
 
 	@PostMapping("/doctor/patient-record/{recordId}/delete")
-	public String deletePatientRecord(@PathVariable int recordId, HttpServletRequest request) {
+	public String deletePatientRecord(@PathVariable("recordId") int recordId, HttpServletRequest request) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
 		}
@@ -219,7 +228,7 @@ public class DoctorController {
 
 	@GetMapping("/doctor/appointment/add")
 	public String getAddAppointmentPage(HttpServletRequest request, Model model,
-			@RequestParam(required = false) Integer patientId) {
+			@RequestParam(name = "patientId", required = false) Integer patientId) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
 		}
@@ -239,10 +248,11 @@ public class DoctorController {
 	}
 
 	@PostMapping("/doctor/appointment/add")
-	public String addAppointment(@RequestParam int patientId,
-			@RequestParam(required = false) String appointmentDateTime,
-			@RequestParam(required = false) String reason, @RequestParam(required = false) String notes,
-			@RequestParam(required = false) String status, HttpServletRequest request) {
+	public String addAppointment(@RequestParam("patientId") int patientId,
+			@RequestParam(name = "appointmentDateTime", required = false) String appointmentDateTime,
+			@RequestParam(name = "reason", required = false) String reason,
+			@RequestParam(name = "notes", required = false) String notes,
+			@RequestParam(name = "status", required = false) String status, HttpServletRequest request) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
 		}
@@ -264,15 +274,22 @@ public class DoctorController {
 		// Parse appointment date time
 		if (appointmentDateTime != null && !appointmentDateTime.isBlank()) {
 			try {
-				// Handle HTML datetime-local format (yyyy-MM-ddTHH:mm)
-				LocalDateTime dateTime = LocalDateTime.parse(appointmentDateTime.replace(" ", "T"));
+				// Handle HTML datetime-local format (yyyy-MM-ddTHH:mm or yyyy-MM-dd HH:mm)
+				String dateTimeStr = appointmentDateTime.replace(" ", "T");
+				if (!dateTimeStr.contains("T")) {
+					dateTimeStr = dateTimeStr + "T00:00";
+				}
+				if (dateTimeStr.length() == 16) {
+					dateTimeStr = dateTimeStr + ":00"; // Add seconds if missing
+				}
+				LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr);
 				appointment.setAppointmentDateTime(dateTime);
 			} catch (Exception e) {
-				// If parsing fails, set to current time
-				appointment.setAppointmentDateTime(LocalDateTime.now());
+				// If parsing fails, set to current time + 1 hour
+				appointment.setAppointmentDateTime(LocalDateTime.now().plusHours(1));
 			}
 		} else {
-			appointment.setAppointmentDateTime(LocalDateTime.now());
+			appointment.setAppointmentDateTime(LocalDateTime.now().plusHours(1));
 		}
 
 		appointmentRepository.save(appointment);
@@ -280,7 +297,8 @@ public class DoctorController {
 	}
 
 	@PostMapping("/doctor/appointment/{appointmentId}/update-status")
-	public String updateAppointmentStatus(@PathVariable int appointmentId, @RequestParam String status,
+	public String updateAppointmentStatus(@PathVariable("appointmentId") int appointmentId,
+			@RequestParam("status") String status,
 			HttpServletRequest request) {
 		if (!authHelper.hasRole(request, Role.DOCTOR)) {
 			return "redirect:/doctor/login";
@@ -298,4 +316,3 @@ public class DoctorController {
 	}
 
 }
-

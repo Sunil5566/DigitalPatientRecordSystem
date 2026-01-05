@@ -33,7 +33,8 @@ public class NurseController {
 	private VitalsRepository vitalsRepository;
 
 	@GetMapping("/nurse/patients")
-	public String viewPatients(HttpServletRequest request, Model model, @RequestParam(required = false) String search) {
+	public String viewPatients(HttpServletRequest request, Model model,
+			@RequestParam(name = "search", required = false) String search) {
 		if (!authHelper.hasRole(request, Role.NURSE)) {
 			return "redirect:/nurse/login";
 		}
@@ -55,7 +56,8 @@ public class NurseController {
 	}
 
 	@GetMapping("/nurse/patient/{patientId}")
-	public String viewPatientDetails(@PathVariable int patientId, HttpServletRequest request, Model model) {
+	public String viewPatientDetails(@PathVariable("patientId") int patientId, HttpServletRequest request,
+			Model model) {
 		if (!authHelper.hasRole(request, Role.NURSE)) {
 			return "redirect:/nurse/login";
 		}
@@ -76,7 +78,7 @@ public class NurseController {
 	}
 
 	@GetMapping("/nurse/patient/{patientId}/vitals/add")
-	public String getAddVitalsPage(@PathVariable int patientId, HttpServletRequest request, Model model) {
+	public String getAddVitalsPage(@PathVariable("patientId") int patientId, HttpServletRequest request, Model model) {
 		if (!authHelper.hasRole(request, Role.NURSE)) {
 			return "redirect:/nurse/login";
 		}
@@ -94,12 +96,16 @@ public class NurseController {
 	}
 
 	@PostMapping("/nurse/patient/{patientId}/vitals/add")
-	public String addVitals(@PathVariable int patientId, @RequestParam(required = false) Double bloodPressureSystolic,
-			@RequestParam(required = false) Double bloodPressureDiastolic,
-			@RequestParam(required = false) Double temperature, @RequestParam(required = false) Double weight,
-			@RequestParam(required = false) Double height, @RequestParam(required = false) Double bloodSugar,
-			@RequestParam(required = false) Integer heartRate,
-			@RequestParam(required = false) Integer respiratoryRate, @RequestParam(required = false) String notes,
+	public String addVitals(@PathVariable("patientId") int patientId,
+			@RequestParam(name = "bloodPressureSystolic", required = false) Double bloodPressureSystolic,
+			@RequestParam(name = "bloodPressureDiastolic", required = false) Double bloodPressureDiastolic,
+			@RequestParam(name = "temperature", required = false) Double temperature,
+			@RequestParam(name = "weight", required = false) Double weight,
+			@RequestParam(name = "height", required = false) Double height,
+			@RequestParam(name = "bloodSugar", required = false) Double bloodSugar,
+			@RequestParam(name = "heartRate", required = false) Integer heartRate,
+			@RequestParam(name = "respiratoryRate", required = false) Integer respiratoryRate,
+			@RequestParam(name = "notes", required = false) String notes,
 			HttpServletRequest request) {
 		if (!authHelper.hasRole(request, Role.NURSE)) {
 			return "redirect:/nurse/login";
@@ -142,9 +148,11 @@ public class NurseController {
 	}
 
 	@PostMapping("/nurse/patient/add")
-	public String addPatient(@RequestParam String firstName, @RequestParam(required = false) String lastName,
-			@RequestParam String gender, @RequestParam int age, @RequestParam(required = false) String contact,
-			@RequestParam(required = false) String address, HttpServletRequest request) {
+	public String addPatient(@RequestParam("firstName") String firstName,
+			@RequestParam(name = "lastName", required = false) String lastName,
+			@RequestParam("gender") String gender, @RequestParam("age") int age,
+			@RequestParam(name = "contact", required = false) String contact,
+			@RequestParam(name = "address", required = false) String address, HttpServletRequest request) {
 		if (!authHelper.hasRole(request, Role.NURSE)) {
 			return "redirect:/nurse/login";
 		}
@@ -153,15 +161,18 @@ public class NurseController {
 
 		Patient patient = new Patient();
 		patient.setFirstName(firstName);
-		patient.setLastName(lastName);
-		patient.setGender(com.example.demo.user.Gender.valueOf(gender));
+		patient.setLastName(lastName != null ? lastName : "");
+		try {
+			patient.setGender(com.example.demo.user.Gender.valueOf(gender.toUpperCase()));
+		} catch (IllegalArgumentException e) {
+			patient.setGender(com.example.demo.user.Gender.MALE); // Default
+		}
 		patient.setAge(age);
-		patient.setContact(contact);
-		patient.setAddress(address);
+		patient.setContact(contact != null ? contact : "");
+		patient.setAddress(address != null ? address : "");
 
 		patientRepository.save(patient);
 		return "redirect:/nurse/patients";
 	}
 
 }
-

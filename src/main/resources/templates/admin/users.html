@@ -11,7 +11,7 @@
 <div class="topbar">
     Admin Dashboard >> Manage Users
     <div>
-        <a href="/dashboard" style="color: white; margin-right: 10px;">Dashboard</a>
+        <a href="/admin/dashboard" style="color: white; margin-right: 10px;">Dashboard</a>
         <a href="/logout" class="logout-btn">Logout</a>
     </div>
 </div>
@@ -68,16 +68,15 @@
                 <td style="padding: 12px; border: 1px solid #ddd;" th:text="${nurse.firstName + ' ' + nurse.lastName}"></td>
                 <td style="padding: 12px; border: 1px solid #ddd;" th:text="${nurse.email}"></td>
                 <td style="padding: 12px; border: 1px solid #ddd;">
-                    <span th:if="${nurse.status == 'APPROVED'}" style="color: green; font-weight: bold;">APPROVED</span>
-                    <span th:if="${nurse.status == 'PENDING'}" style="color: orange; font-weight: bold;">PENDING</span>
-                    <span th:if="${nurse.status == 'BLOCKED'}" style="color: red; font-weight: bold;">BLOCKED</span>
+                    <span th:if="${nurse.active}" style="color: green; font-weight: bold;">ACTIVE</span>
+                    <span th:if="${!nurse.active}" style="color: red; font-weight: bold;">INACTIVE</span>
                 </td>
                 <td style="padding: 12px; border: 1px solid #ddd;">
-                    <form th:if="${nurse.status != 'APPROVED'}" th:action="@{/admin/users/{id}/approve(id=${nurse.id})}" method="post" style="display: inline;">
-                        <button type="submit" style="background: green; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Approve</button>
+                    <form th:if="${!nurse.active}" th:action="@{/admin/users/{id}/approve(id=${nurse.id})}" method="post" style="display: inline;">
+                        <button type="submit" style="background: green; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Activate</button>
                     </form>
-                    <form th:if="${nurse.status != 'BLOCKED'}" th:action="@{/admin/users/{id}/block(id=${nurse.id})}" method="post" style="display: inline;">
-                        <button type="submit" style="background: red; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; margin-left: 5px;">Block</button>
+                    <form th:if="${nurse.active}" th:action="@{/admin/users/{id}/block(id=${nurse.id})}" method="post" style="display: inline;">
+                        <button type="submit" style="background: red; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; margin-left: 5px;">Deactivate</button>
                     </form>
                 </td>
             </tr>

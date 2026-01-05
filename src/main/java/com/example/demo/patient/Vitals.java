@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -27,9 +28,11 @@ public class Vitals {
 	private Instant updatedAt;
 
 	@ManyToOne
+	@JoinColumn(name = "patient_id")
 	private Patient patient;
 
 	@ManyToOne
+	@JoinColumn(name = "recorded_by_id")
 	private User recordedBy; // Nurse who recorded
 
 	private Double bloodPressureSystolic;

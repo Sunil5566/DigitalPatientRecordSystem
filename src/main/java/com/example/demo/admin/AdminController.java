@@ -58,7 +58,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/admin/users/{userId}/approve")
-	public String approveUser(@PathVariable int userId, HttpServletRequest request) {
+	public String approveUser(@PathVariable("userId") int userId, HttpServletRequest request) {
 		if (!authHelper.hasRole(request, Role.ADMIN)) {
 			return "redirect:/admin/login";
 		}
@@ -74,7 +74,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/admin/users/{userId}/block")
-	public String blockUser(@PathVariable int userId, HttpServletRequest request) {
+	public String blockUser(@PathVariable("userId") int userId, HttpServletRequest request) {
 		if (!authHelper.hasRole(request, Role.ADMIN)) {
 			return "redirect:/admin/login";
 		}
@@ -91,7 +91,7 @@ public class AdminController {
 
 	@GetMapping("/admin/patients")
 	public String viewAllPatients(HttpServletRequest request, Model model,
-			@RequestParam(required = false) String search) {
+			@RequestParam(name = "search", required = false) String search) {
 		if (!authHelper.hasRole(request, Role.ADMIN)) {
 			return "redirect:/admin/login";
 		}
@@ -141,4 +141,3 @@ public class AdminController {
 	}
 
 }
-
